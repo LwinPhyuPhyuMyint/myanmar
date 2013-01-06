@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 TRANSITIONAL//EN">
+<html>
+<head>
+<title>Myanmar IME</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="မြန်မာ,Myanmar IME,Burmese IME,Javascript Myanmar IME,Javascript Burmese IME,Web IME,Javascript IME,Javascript Web IME,gksrmfdlqfurrl" />
+<meta name="description" content="မြန်မာ.Myanmar IME built on Javascript.gksrmfdlqfurrl." />
+<link rel="stylesheet" href="style/style.css">
+<link rel="stylesheet" href="style/standalone.css">
+<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+</head>
+<body>
+
+
+<h1><img src="style/logo.png" alt="Myanmar IME"></h1>
+
+<div id="version">
+<a href="http://myanmarime.com/">http://myanmarime.com/</a><br />
+Javascript Burmese IME / မြန်မာ
+4.00 beta ()<br />
+</div>
+
+<script type="text/javascript" src='lib/jsim_common.js'></script>
+<script type="text/javascript" src='lib/jsim_keycode.js'></script>
+<script type="text/javascript" src='lib/jsim_caret.js'></script>
+<script type="text/javascript" src='lib/jsim.js'></script>
+<script type="text/javascript" src='lib/jomyanb.js'></script>
+<script type="text/javascript" src='lib/jsim_myanmar.js'></script>
+
+
+<style type="text/css">
+@import url(http://www.google.com/cse/api/branding.css);
+</style>
+<div class="cse-branding-right" style="background-color:#FFFFFF;color:#000000">
+  <div class="cse-branding-form">
+  <form action="http://www.google.co.kr/cse" id="cse-search-box" target="_blank">
+	  <div>
+		<input type="hidden" name="cx" value="partner-pub-3971375039517858:8s2nah-bv7j" />
+		<input type="hidden" name="ie" value="UTF-8" />
+		<input type="text" name="q" size="38" id="myanmarIM_adsense" />
+		<input type="submit" name="sa" value="&#xac80;&#xc0c9;" />
+	  </div>
+	</form>
+  </div>
+  <div class="cse-branding-logo">
+	<img src="http://www.google.com/images/poweredby_transparent/poweredby_FFFFFF.gif" alt="Google" />
+  </div>
+  <div class="cse-branding-text">
+	&#47582;&#52644;&#44160;&#49353;
+  </div>
+</div>
+
+<form name="search" onsubmit="myanmarIM_Search();return false;">
+<input type="text" id="myanmarime_for_search" size="38">
+<input type="submit" name="search" value="&#xac80;&#xc0c9;">
+<select name="engine" id="engineList">
+<option value="http://search.naver.com/search.naver?query=">Naver</option>
+<option value="http://search.daum.net/search?q=">Daum</option>
+</select>
+</form>
+
+<form name="imeForm" onsubmit="return false;">
+<textarea id="myanmarime"></textarea><br />
+<button id="twit_button" onclick="jsIM_Twit('twitter');"><img src="style/twitter.png" width=16 height=16 alt="Twit this on twitter"></button>
+</form>
+
+
+<script type="text/javascript">
+myanmarIM_Obj = new JSIM( document.getElementById( 'myanmarime' ), JSIM_myanmar4 );
+myanmarIM_for_search_Obj = new JSIM( document.getElementById( 'myanmarime_for_search' ), JSIM_myanmar4 );
+myanmarIM_adsense_Obj = new JSIM( document.getElementById( 'myanmarIM_adsense' ), JSIM_myanmar4 );
+function myanmarIM_Search(){ // requires myanmarIM_for_search_Obj
+  var queryWord = myanmarIM_for_search_Obj.imeBox.value;
+  var baseUrl = document.getElementById( 'engineList' ).value;
+  var url = baseUrl + encodeURIComponent( queryWord );
+  window.open( url, '_blank' );
+}
+
+function jsIM_Twit(service_name){
+	var statusWord = myanmarIM_Obj.imeBox.value;
+	var baseUrl = "http://twitter.com/?status=";
+	var url = baseUrl + encodeURIComponent( statusWord );
+	window.open( url, "_blank" );
+}
+
+</script>
+
+<div id="debug"></div>
+
+<div id="explanation">
+
+<a href="javascript:d=document;w=window;t='';void(w.open('http://colspan.net/myanmarime/','_blank','scrollbars=yes,width=450,height=480,status=yes,resizable=yes'));">Myanmar IME Bookmarklet(Pop Up)</a><br>
+<a href="javascript:(function(){var s=document.createElement('script');s.charset='utf-8';s.src='http://colspan.net/myanmarime/bookmarklet/loader.js';document.body.appendChild(s);})();">Myanmar IME Bookmarklet(Embed)</a><br />
+(<a href="howtouse.html">How to use bookmarklet</a>)
+</div>
+
+
+<div id="credit">
+<a href="http://colspan.net/myanamrime_stable/">Old Stable Version</a> / 
+<a href="http://colspan.net/blog/release-notes/">Release Notes</a><br />
+<a href="http://colspan.net/japaneseime/">Japanese IME</a>
+<br />
+
+by <a href="http://colspan.net/">Colspan</a> / License: <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a><br />
+johab.js by <a href="http://ha1.seikyou.ne.jp/home/akairingosaita/typing/">chiyu</a>, caret.js by <a href="http://d.hatena.ne.jp/project_the_tower2/">sion</a><br />
+</div>
+
+
+<img src="style/keyboard_kr.png" style="position:absolute;top:10px;left:210px;">
+
+</body>
+</html>
+
