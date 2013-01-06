@@ -1,0 +1,139 @@
+// -*- coding: utf-8; -*-
+// This is Public Domain Software: nobody can have any copyright with this.
+// Distribution and improvement of this software are strongly encouraged.
+/*
+を初声・中声・終声に分解・合成するための道具作り
+jomyanb.jsを読み込んだ後に、このファイルを読み込むこと。
+KS完成型コード内に収まるように変形するための関数を提供する。
+
+関数
+bool isMsUnicodeChar(char)
+str splitIntoMsUnicode(char)
+str toMsUnicodeString(str)
+*/
+
+var msMyanmarString1 = "ကကာကာ့ကာ:ကိကီကီ့ကီ:ကုကူကူ့ကူ:ကေကေ့ကေ:ကဲကဲ့ကောကော့ကော်ကော့်ကံကံ့ကိုကို့ကို:ကုံကုံ့ကုံ:ကျို:ကက်ကိက်ကောက်ကိုက်ကင်ကင့်ကင်:ကောင်ကောင့်ကောင်:ကိုင်ကိုင့်ကိုင်:ကစ်ကာစ်ကာ:စ်ကိစ်ကုစ်ကဇ်ကာဇ်ကဉ်ကဉ့်ကဉ်:ကတ်ကတ်စ်ကာတ်ကိတ်ကုတ်ကဒ်ကာဒ်ကန်ကန့်ကန်:ကာန်ကာန်:ကိန်ကိန့်ကိန်:ကုန်ကုန့်ကုန်:ကပ်ကိပ်ကုပ်ကမ်ကမ့်ကမ်:ကယ်ကယ်လ်ကာယ်ကိုယ်ကိုယ့်ကိုလ်ကျကျာကျာ့ကျာ:ကျိကျီကျီ:ကျုကျူကျူ:ကျေကျေ:ကျဲကျဲ့ကျောကျော့ကျော်ကျံကျံ့ကျိုကျို့ကျို:ကျုံကျုံ့ကျုံ:ကျက်ကျိုက်ကျင်ကျင့်ကျင်:ကျောင်ကျောင်:ကျိုင်ကျိုင့်ကျိုင်:ကျစ်ကျဉ်ကျဉ့်ကျဉ်:ကျတ်ကျိတ်ကျုတ်ကျန်ကျန့်ကျန်:ကျိန်ကျိန်:ကျုန်ကျုန်:ကျပ်ကျိပ်ကျုပ်ကျမ်:ကျိမ့်ကျယ်ကြကြာကြာ:ကြိကြီကြီ:ကြုကြူကြူ:ကြေကြေ့ကြေ:ကြဲကြဲ့ကြောကြော့ကြော်ကြံကြံ့ကြိုကြို့ကြို:ကြူံကြုံ့ကြုံ:ကြက်ကြောက်ကြိုက်ကြင်ကြင့်ကြင်:ကြောင့်ကြောင်:ကြိုင်ကြိုင်:ကြစ်ကြဉ်ကြဉ်:ကြဉ့်ကြတ်ကြိတ်ကြုတ်ကြန်ကြန့်ကြန်:ကြိန်ကြိန့်ကြိန်:ကြုန်:ကြပ်ကြုပ်ကြမ်ကြမ်:ကြိမ်ကြိမ့်ကြိမ်:ကြယ်ကွကွာကွာ့ကွာ:ကွိကွိ့ကွီကွီ:ကွေကွေ့ကွေ:ကွဲကွဲ့ကွံကွံ့ကွက်ကွိုက်ကွင်ကွင့်ကွင်:ကွိုင်ကွစ်ကွတ်ကွန်ကွန့်ကွန်:ကွပ်ကွမ်ကွမ်:ကွယ်ကွယ့်ကှိုက်ကျွနု်ပ်ကျွေကျွေ:ကျွဲကျွံကျွတ်ကျွန်ကျွန်:ကျွမ်:ကျှို့ကြွကြွာကြွာ:ကြွေကြွေ့ကြွေ:ကြွက်ကြွင်:ကြွတ်ကြွန်ကြွပ်ကြွမ်:ကြွယ်";
+
+var msMyanmarString2 = "ခခါခါ:ခိခီခီ:ခုခူခူ:ခေခေ့ခေ:ခဲခဲ့ခေါခေါ့ခေါ်ခံခံ့ခိုခို့ခို:ခုံခုံ့ခုံ:ချို:ခက်ခေါက်ခိုက်ခင်ခင့်ခင့်ခင်:ခေါင်ခေါင့်ခေါင်:ခိုင်ခိုင့်ခိုင်:ခစ်ခတ်ခတ်ခေတ်ခပ်ခိပ်ခမ်ခမ်:ခိမ်ချချာချာ့ချာ:ချိချီချီ:ချုချူချူ:ချေချေ:ချဲချဲ့ချောချော့ချော်ချံချိုချို့ချို:ချုံချုံ့ချုံ:ချက်ချောက်ချိုက်ချင်ချင့်ချင်:ချောင်ချောင်:ချိုင်ချိုင့်ချိုင်:ချစ်ချဉ်ချဉ်:ချတ်ချိတ်ချုတ်ချန်ချန့်ချန်:ချိန်ချိန်:ချုန်:ချပ်ချိပ်ချုပ်ချမ်:ချိမ့်ချယ်ခြူ:ခြံခြောက်ခြိုက်ခြင်ခြင့်ခြိမ်ခြိမ့်ခွခွာခွာ:ခွိခွီခွီ:ခွေခွေ့ခွေ:ခွဲခွဲ့ခွံခွံ့ခွက်ခွင်ခွင့်ခွင်:ခွန်ခွန့်ခွန်:ခွပ်ခွမ်ခွမ်:ချွေချွေ:ချွဲချွက်ချွတ်ချွန်ချွန်:ချွမ်:ခြွေခြွေ့ခြွေ:";
+
+var msMyanmarString3 = "ဂဂါဂါ:";
+
+var msMyanmarString4 = "ဃ";
+
+var msMyanmarString5 = "င";
+
+var msMyanmarString6 = "စ";
+
+var msMyanmarString7 = "ဆ";
+
+var msMyanmarString8 = "ဇ";
+
+var msMyanmarString9 = "ဈ";
+
+var msMyanmarString10 = "ဉ";
+
+var msMyanmarString11 = "ဏ";
+
+var msMyanmarString12 = "တ";
+
+var msMyanmarString13 = "ထ";
+
+var msMyanmarString14 = "ဒ";
+
+var msMyanmarString15 = "ဓ";
+
+var msMyanmarString16 = "န";
+
+var msMyanmarString17 = "ပ";
+
+var msMyanmarString18 = "ဖ";
+
+var msMyanmarString19 = "ဗ";
+
+var msMyanmarString20 = "ဘ";
+
+var msMyanmarString21 = "မ";
+
+var msMyanmarString22 = "ယ";
+
+var msMyanmarString23 = "ရ";
+
+var msMyanmarString24 = "လ";
+
+var msMyanmarString25 = "ဝ";
+
+var msMyanmarString26 = "သ";
+
+var msMyanmarString27 = "ဟ";
+
+var msMyanmarString28 = "အ";
+ 
+
+function isMsUnicodeChar(mystr) {
+  if (msMyanmarString1.indexOf(mystr)>=0 || 
+      msMyanmarString2.indexOf(mystr)>=0 ||
+      msMyanmarString3.indexOf(mystr)>=0 ||
+      msMyanmarString4.indexOf(mystr)>=0 ||
+      msMyanmarString5.indexOf(mystr)>=0 ||
+      msMyanmarString6.indexOf(mystr)>=0 ||
+      msMyanmarString7.indexOf(mystr)>=0 ||
+      msMyanmarString8.indexOf(mystr)>=0 ||
+      msMyanmarString9.indexOf(mystr)>=0 ||
+      msMyanmarString10.indexOf(mystr)>=0 ||
+      msMyanmarString11.indexOf(mystr)>=0 ||
+      msMyanmarString12.indexOf(mystr)>=0 ||
+      msMyanmarString13.indexOf(mystr)>=0 ||
+      msMyanmarString14.indexOf(mystr)>=0 ||
+      msMyanmarString15.indexOf(mystr)>=0 ||
+      msMyanmarString16.indexOf(mystr)>=0 ||
+      msMyanmarString17.indexOf(mystr)>=0 ||
+      msMyanmarString18.indexOf(mystr)>=0 ||
+      msMyanmarString19.indexOf(mystr)>=0 ||
+      msMyanmarString20.indexOf(mystr)>=0 ||
+      msMyanmarString21.indexOf(mystr)>=0 ||
+      msMyanmarString22.indexOf(mystr)>=0 ||
+      msMyanmarString23.indexOf(mystr)>=0 ||
+      msMyanmarString24.indexOf(mystr)>=0 ||
+      msMyanmarString25.indexOf(mystr)>=0 ||
+      msMyanmarString26.indexOf(mystr)>=0 ||
+      msMyanmarString27.indexOf(mystr)>=0 ||
+      msMyanmarString28.indexOf(mystr)>=0   ) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function splitIntoMsUnicode(mychar) {
+  if(!isUnicodeChar(mychar)) {
+    return mystr;
+  }
+  var myMyanmarClass = new ClassJohabFromChar(mychar);  
+  var myfirstcode = myMyanmarClass.getFirstCode();
+  var mysecondcode = myMyanmarClass.getSecondCode();
+  var mykschar = johabFromThreeCodeToChar(myfirstcode, mysecondcode, 0);
+  var mythirdkey = myMyanmarClass.getThirdKey();
+  if (mykschar.charCodeAt(0) == 50108) { //""のUnicode番号が50108
+    mykschar = "";
+  }
+  if (mythirdkey == "") { //""の時のみ、パッチム無しなのにKS完成型に無い
+    return mykschar;
+  } else {
+    return  mykschar + jasoFromKeyToChar(mythirdkey);
+  }
+}
+
+function toMsUnicodeString(mystr) {
+  var j=0;
+  var return_str = "";
+  for (j=0; j<mystr.length; j++) {
+    if(isMsUnicodeChar(mystr.charAt(j))) {
+      return_str += mystr.charAt(j);
+    } else if (isUnicodeChar(mystr.charAt(j))) {
+      return_str += splitIntoMsUnicode(mystr.charAt(j));
+    } else {
+      return_str += mystr.charAt(j);
+    }
+  }
+  return return_str;      
+}
